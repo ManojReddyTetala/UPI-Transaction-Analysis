@@ -6,12 +6,12 @@
 
 ## Team Members
 
-| Roll Number | Member                      | Assigned Work                                          |
-| ----------- | --------------------------- | ------------------------------------------------------ |
-| 25B11CS002  | K. Sri Sai Surya Manikanta  | Data Loading and Reading; Data Acquisition & Filtering |
-| 25B11CS005  | A. Divija Naga Sai Teja Sri | Data Extraction; Data Validation & Cleaning            |
-| 25B11CS845  | Sana Jaswanthi              | Data Aggregation & Representation; Data Analysis       |
-| 25B11CS946  | T. Manoj Reddy              | Data Visualization; Results & Interpretation           |
+| Roll Number | Member                                  | Assigned Work                                          |
+| ----------- | --------------------------------------- | ------------------------------------------------------ |
+| 25B11CS002  | K. Sri Sai Surya Manikanta (Tech Lead)  | Data Loading and Reading; Data Acquisition & Filtering |
+| 25B11CS005  | A. Divija Naga Sai Teja Sri (Team Lead) | Data Extraction; Data Validation & Cleaning            |
+| 25B11CS845  | S. Jaswanthi (Analysis Lead)            | Data Aggregation & Representation; Data Analysis       |
+| 25B11CS946  | T. Manoj Reddy (Team Leader)            | Data Visualization; Results & Interpretation           |
 
 ## Individual Responsibilities
 
