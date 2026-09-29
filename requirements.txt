@@ -1,0 +1,93 @@
+# ============================================================
+# UPI Transaction Analysis - Project Requirements
+# Data Analysis Essentials | Team 2
+# ============================================================
+#
+# This file lists the Python packages required to execute the
+# project's Jupyter notebooks from data loading through analysis
+# and visualization.
+#
+# Recommended environment:
+# - Python 3.x
+# - Jupyter Notebook / Google Colab / VS Code
+#
+# Install all dependencies with:
+#     pip install -r requirements.txt
+#
+# ============================================================
+# 1. DATA HANDLING & ANALYSIS
+# ============================================================
+
+pandas
+
+# Used for:
+# - Loading the UPI CSV dataset
+# - Data inspection and validation
+# - Missing-value and duplicate checks
+# - Filtering and data transformation
+# - Grouping, sorting and aggregation
+# - Statistical summaries and comparisons
+
+
+# ============================================================
+# 2. NUMERICAL COMPUTATION
+# ============================================================
+
+numpy
+
+# Used for:
+# - Numerical operations
+# - Supporting analytical calculations
+# - Working with numerical transaction data
+
+
+# ============================================================
+# 3. DATA VISUALIZATION
+# ============================================================
+
+matplotlib
+
+# Used for:
+# - Bar charts
+# - Distribution charts
+# - Transaction trend visualizations
+# - Fraud analysis visualizations
+# - Comparing transaction categories and patterns
+
+
+# ============================================================
+# PROJECT EXECUTION NOTES
+# ============================================================
+#
+# The project workflow uses these libraries to support:
+#
+# Dataset
+#   ↓
+# Data Loading & Reading
+#   ↓
+# Data Acquisition & Filtering
+#   ↓
+# Data Extraction
+#   ↓
+# Data Validation & Cleaning
+#   ↓
+# Data Aggregation & Representation
+#   ↓
+# Data Analysis
+#   ↓
+# Data Visualization
+#   ↓
+# Results & Interpretation
+#
+# No additional third-party Python libraries are required by
+# the project notebooks.
+#
+# Dataset:
+#     UPI Transactions 2024 Dataset
+#
+# Main file:
+#     upi_transactions_2024.csv
+#
+# The project uses Pandas, NumPy and Matplotlib consistently
+# across the analysis workflow.
+# ============================================================
