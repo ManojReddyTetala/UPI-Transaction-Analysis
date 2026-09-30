@@ -114,22 +114,30 @@ https://www.kaggle.com/datasets/skullagos5246/upi-transactions-2024-dataset
 
 ### Dataset File
 
+The project uses a modified noisy version of the dataset for the validation and cleaning stage.
+
 ```text
-0. DataSet/upi_transactions_2024.csv
+0. DataSet/upi_transactions_2024_with_noise(1).csv
+```
+
+After cleaning, the validated dataset is:
+
+```text
+0. DataSet/upi_transactions_2024(5).csv
 ```
 
 ### Dataset Size
 
-| Property          |       Value |
-| ----------------- | ----------: |
-| Total records     | **250,000** |
-| Total columns     |      **17** |
-| Missing values    |       **0** |
-| Duplicate records |       **0** |
+| Property | Value |
+| --- | ---: |
+| Total records | **250,000** |
+| Columns in noisy input | **27** |
+| Columns after cleaning | **17** |
+| Noise columns removed | **10** |
+| Missing values | **0** |
+| Duplicate records | **0** |
 
-No missing values were identified in the dataset.
-
----
+The noisy input contains 10 additional device, application, location, network, session, and contextual attributes. These fields were removed during Stage 4 so that the cleaned dataset contains the required 17 transaction attributes.
 
 ## 6. Dataset Attributes
 
@@ -154,6 +162,27 @@ The dataset contains 17 attributes:
 |  15 | `hour_of_day`        |
 |  16 | `day_of_week`        |
 |  17 | `is_weekend`         |
+
+---
+
+### Additional Noise Attributes in the Modified Input
+
+The modified noisy dataset contains the following 10 additional attributes. These were introduced as noise and removed during data validation and cleaning:
+
+| Attribute | Category |
+| --- | --- |
+| `battery_level_pct` | Device |
+| `app_version` | Application |
+| `device_storage_free_gb` | Device |
+| `screen_brightness_pct` | Device |
+| `device_language` | Device / Context |
+| `gps_accuracy_m` | Location / Context |
+| `nearby_wifi_count` | Network / Context |
+| `session_duration_sec` | Session |
+| `notifications_last_hour` | Session / Context |
+| `merchant_distance_km` | Location / Context |
+
+The cleaned dataset retains the original 17 transaction attributes listed above.
 
 ---
 
@@ -286,35 +315,57 @@ The extracted information was used for validation, grouping, aggregation, and ti
 
 ### Purpose
 
-To verify that the data used for analysis was valid and consistent.
+To verify that the modified noisy input data is valid and consistent, remove the additional noise attributes, and prepare the 17-column dataset for analysis.
+
+### Modified Input and Noise Removal
+
+The validation stage starts with the modified noisy dataset containing **250,000 rows and 27 columns**.
+
+The noisy input includes 10 additional device, application, location, network, session, and contextual attributes:
+
+- `battery_level_pct`
+- `app_version`
+- `device_storage_free_gb`
+- `screen_brightness_pct`
+- `device_language`
+- `gps_accuracy_m`
+- `nearby_wifi_count`
+- `session_duration_sec`
+- `notifications_last_hour`
+- `merchant_distance_km`
+
+These 10 attributes were removed because they were introduced as noise and are not part of the required 17-column transaction dataset.
 
 ### Checks performed
 
-- Missing values
-- Duplicate records
-- Transaction amounts
-- Fraud flag values
-- Transaction-related categorical fields
-- Timestamp data type
+- Compared the noisy input schema with the required transaction schema.
+- Identified the additional noise columns.
+- Removed the 10 noise columns.
+- Checked missing values.
+- Checked duplicate records.
+- Checked transaction amounts.
+- Checked fraud flag values.
+- Checked transaction-related categorical fields.
+- Standardized the `timestamp` field to an appropriate datetime type.
 
 ### Results
 
 ```text
-Rows                : 250,000
-Columns             : 17
-Missing values      : 0
-Duplicate rows      : 0
-Negative amounts    : 0
-Invalid fraud flags : 0
+Rows                   : 250,000
+Columns before cleaning: 27
+Noise columns removed  : 10
+Columns after cleaning : 17
+Missing values         : 0
+Duplicate rows         : 0
+Negative amounts       : 0
+Invalid fraud flags    : 0
 ```
 
-The timestamp was converted to an appropriate datetime type for time-based analysis.
-
-The validated dataset remained **250,000 × 17**.
+The cleaned dataset remained **250,000 × 17** after removing the additional noise attributes.
 
 ### How it supports the next stage
 
-After validation, the dataset was ready for grouping and aggregation.
+After noise removal and validation, the cleaned dataset was ready for grouping and aggregation.
 
 ---
 
@@ -640,7 +691,8 @@ UPI_Transaction_Analysis/
 ├── Team Details.md
 │
 ├── 0. DataSet/
-│   └── upi_transactions_2024.csv
+│   ├── upi_transactions_2024_with_noise(1).csv
+│   └── upi_transactions_2024(5).csv
 │
 ├── 1. Data Loading and Reading/
 │   ├── 01_Data_Loading_Reading.ipynb
@@ -709,11 +761,14 @@ matplotlib
 
 ## Dataset Location
 
-Ensure the dataset is available at:
+Ensure the modified noisy input and cleaned output are available at:
 
 ```text
-0. DataSet/upi_transactions_2024.csv
+0. DataSet/upi_transactions_2024_with_noise(1).csv
+0. DataSet/upi_transactions_2024(5).csv
 ```
+
+Stage 4 uses the noisy input, removes the 10 additional noise attributes, validates the remaining transaction data, and produces the cleaned 17-column dataset.
 
 ## Notebook Execution Order
 
