@@ -2,7 +2,9 @@
 
 ## Objective
 
-The objective of this stage is to validate the dataset and identify or handle missing values, duplicate records, invalid values, data type issues, and additional noise introduced into the dataset.
+The objective of this stage is to validate the noisy UPI transaction dataset and transform it into a clean, consistent dataset suitable for further aggregation, analysis, and visualization.
+
+The validation focuses on identifying and handling missing values, duplicate records, invalid transaction values, data-type issues, inconsistent fields, and additional noise introduced into the dataset.
 
 ## Platform and Tools
 
@@ -10,61 +12,72 @@ The objective of this stage is to validate the dataset and identify or handle mi
 - VS Code
 - Python
 - Pandas
+- NumPy
 
 ## Input Dataset
 
 The stage uses the noisy UPI transaction dataset:
 
-`upi_transactions_2024_with_noise(1).csv`
+`Dataset(1).csv`
 
-The noisy dataset contains **250,000 rows and 27 columns**. The cleaned output contains **250,000 rows and 17 columns**.
+The noisy dataset contains **250,000 rows and 27 columns**.
+
+After validation and cleaning, the output dataset contains **250,000 rows and 17 required transaction columns**.
 
 ## Noise / Dataset Modifications
 
-The noisy dataset was modified by adding 10 additional device, session, and contextual attributes that were not part of the required transaction dataset. These fields were removed during cleaning:
+The noisy dataset contains 10 additional device, session, application, network, and contextual attributes that are not required for the core transaction analysis.
 
-- `battery_level_pct`
-- `app_version`
-- `device_storage_free_gb`
-- `screen_brightness_pct`
-- `device_language`
-- `gps_accuracy_m`
-- `nearby_wifi_count`
-- `session_duration_sec`
-- `notifications_last_hour`
-- `merchant_distance_km`
+These additional fields were removed during cleaning:
 
-The core 17 transaction columns were retained in the cleaned dataset.
+- `battery level %`
+- `App Version`
+- `device storage free gb`
+- `screen brightness %`
+- `Device Language`
+- `GPS accuracy m`
+- `nearby wifi count`
+- `session duration sec`
+- `notifications last hour`
+- `merchant distance km`
 
-The `timestamp` field was also standardized in the cleaned output to a consistent datetime representation (`YYYY-MM-DD HH:MM:SS`).
+The required **17 core transaction columns** were retained in the cleaned dataset.
+
+The `time_stamp` field was also converted and standardized into a consistent datetime representation for subsequent time-based analysis.
 
 ## Operations Performed
 
-1. Validated the original noisy dataset dimensions.
-2. Compared the noisy dataset with the required transaction schema.
-3. Identified the 10 additional noise/device/session/context columns.
-4. Removed the additional noise columns from the dataset.
-5. Checked the data types of important columns.
-6. Converted and standardized the `timestamp` column to datetime format.
-7. Checked for missing values.
-8. Checked for duplicate rows and removed them if present.
-9. Checked for negative transaction amounts.
-10. Checked for invalid `fraud_flag` values.
-11. Validated transaction types and transaction statuses.
-12. Performed final validation of the cleaned dataset.
-13. Displayed a sample cleaned record.
+1. Loaded the noisy dataset using `pandas.read_csv()`.
+2. Validated the original dataset dimensions.
+3. Compared the available fields with the required transaction schema.
+4. Identified the additional noise/device/session/context columns.
+5. Removed the 10 unnecessary columns.
+6. Checked the data types of important fields.
+7. Converted the `time_stamp` field to datetime format.
+8. Checked missing values before cleaning.
+9. Handled the identified missing values in the required transaction fields.
+10. Checked for duplicate rows.
+11. Checked transaction amounts for negative or invalid values.
+12. Checked `Fraud Flag` values for invalid entries.
+13. Validated transaction types.
+14. Validated transaction statuses.
+15. Performed final validation of the cleaned dataset.
+16. Displayed sample records from the cleaned dataset.
 
 ## Validation Results
 
-- Rows: 250,000
-- Columns before cleaning: 27
-- Columns after cleaning: 17
-- Noise columns removed: 10
-- Missing values: 0
-- Duplicate rows: 0
-- Negative amounts: 0
-- Invalid fraud flags: 0
-- Timestamp standardized: Yes
+| Validation Check             | Noisy Dataset | Cleaned Dataset |
+| ---------------------------- | ------------: | --------------: |
+| Rows                         |   **250,000** |     **250,000** |
+| Columns                      |        **27** |          **17** |
+| Missing values               |   **124,747** |           **0** |
+| Duplicate rows               |         **0** |           **0** |
+| Negative transaction amounts |             — |           **0** |
+| Invalid fraud flags          |             — |           **0** |
+| Timestamp standardized       |            No |         **Yes** |
+| Noise columns                |        **10** |           **0** |
+
+The **124,747 missing values** represent the missing data identified in the noisy input before cleaning. After the validation and cleaning operations, the required transaction dataset contains **0 missing values**.
 
 ## Categorical Values Identified
 
@@ -82,19 +95,63 @@ The `timestamp` field was also standardized in the cleaned output to a consisten
 
 ## Removed Noise Columns
 
-| Column | Category |
-|---|---|
-| `battery_level_pct` | Device |
-| `app_version` | Application |
-| `device_storage_free_gb` | Device |
-| `screen_brightness_pct` | Device |
-| `device_language` | Device / Context |
-| `gps_accuracy_m` | Location / Context |
-| `nearby_wifi_count` | Network / Context |
-| `session_duration_sec` | Session |
-| `notifications_last_hour` | Session / Context |
-| `merchant_distance_km` | Location / Context |
+| Column                    | Category           |
+| ------------------------- | ------------------ |
+| `battery level %`         | Device             |
+| `App Version`             | Application        |
+| `device storage free gb`  | Device             |
+| `screen brightness %`     | Device             |
+| `Device Language`         | Device / Context   |
+| `GPS accuracy m`          | Location / Context |
+| `nearby wifi count`       | Network / Context  |
+| `session duration sec`    | Session            |
+| `notifications last hour` | Session / Context  |
+| `merchant distance km`    | Location / Context |
+
+## Cleaned Dataset
+
+The final cleaned dataset retains the 17 required transaction attributes:
+
+1. `Transaction ID`
+2. `time_stamp`
+3. `Transaction_Type`
+4. `merchant category`
+5. `amount_INR`
+6. `Transaction Status`
+7. `sender_agegroup`
+8. `receiver_age_group`
+9. `Sender State`
+10. `sender bank`
+11. `Receiver_Bank`
+12. `device type`
+13. `Network Type`
+14. `Fraud Flag`
+15. `hour of day`
+16. `Day Of Week`
+17. `is weekend`
+
+## Final Data Quality Status
+
+After cleaning and validation:
+
+- **250,000 records retained**
+- **17 required columns retained**
+- **124,747 raw missing values resolved**
+- **0 missing values remaining**
+- **0 duplicate rows**
+- **0 negative transaction amounts**
+- **0 invalid fraud-flag values**
+- **Timestamp standardized**
+- **10 unnecessary noise columns removed**
+- Transaction types verified
+- Transaction statuses verified
 
 ## Conclusion
 
-The noisy dataset was successfully transformed into the required cleaned transaction dataset. The 10 additional device, session, network, and contextual noise columns were removed, while the 17 core transaction columns were retained. The cleaned dataset contains 250,000 rows with no missing values, duplicate rows, negative transaction amounts, or invalid fraud flag values. The timestamp was standardized to a consistent datetime representation, and the validated dataset is ready for the next stage.
+The noisy UPI transaction dataset was successfully validated and transformed into the required clean transaction dataset.
+
+The original dataset contained **250,000 rows and 27 columns**, including **10 additional device, application, session, network, and contextual fields**. These unnecessary fields were removed while retaining the **17 core transaction attributes** required for the project.
+
+The initial validation identified **124,747 missing values** in the noisy dataset. After the cleaning process, the final dataset contains **0 missing values and 0 duplicate rows**. Transaction amounts, fraud flags, transaction types, transaction statuses, and timestamp information were also validated.
+
+The resulting **250,000 × 17 cleaned dataset** provides a consistent and validated foundation for the next stages of **data aggregation, statistical analysis, visualization, and interpretation**.
